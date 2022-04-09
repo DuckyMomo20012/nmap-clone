@@ -4,14 +4,23 @@ Simulate nmap command
 
 <table>
   <tr>
-    <th>Language</th>
-    <td>C++17</td>
-  </tr>
-  <tr>
     <th>OS</th>
     <td>Debian 11</td>
   </tr>
+  <tr>
+    <th>gcc, g++</th>
+    <td>10.2.1</td>
+  </tr>
 </table>
+
+## Description:
+
+The idea is simple:
+
+- ICMP packets on some OS may be blocked, so will send ARP packets, because
+  everyone has to answer ARP packets.
+- If the network is: 192.168.202.0/24, then we will send ARP requests to
+  `192.168.202.1` -> `192.168.202.254`.
 
 ## How to build:
 
@@ -53,16 +62,13 @@ nmap-clone/src# git submodule add https://github.com/k84d/unpv13e.git unpv13e
 <details>
     <summary>Examples</summary>
 
-```
-CFLAGS = -I**../unpv13e/**lib -g -O2 -D_REENTRANT -Wall
-LIBS = **../unpv13e/**libunp.a -lpthread
-LIBS_XTI = **../unpv13e/**libunpxti.a **../unpv13e/**libunp.a -lpthread
+CFLAGS = -I`../unpv13e/`lib -g -O2 -D_REENTRANT -Wall
+LIBS = `../unpv13e/`libunp.a -lpthread
+LIBS_XTI = `../unpv13e/`libunpxti.a `../unpv13e/`libunp.a -lpthread
 
-LIBUNP_NAME = ../unpv13e/libunp.a
+LIBUNP_NAME = `../unpv13e/`libunp.a
 
-LIBUNPXTI_NAME = ../unpv13e/libunpxti.a
-
-```
+LIBUNPXTI_NAME = `../unpv13e/`libunpxti.a
 
 </details>
 
@@ -97,3 +103,8 @@ make
 ```console
 make clean
 ```
+
+## TODOs:
+
+- [ ] Change compiled target name
+- [ ] Handle ARP reply
