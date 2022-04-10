@@ -10,6 +10,7 @@ readloop(void)
 	struct iovec	iov;
 	ssize_t			n;
 	struct timeval	tval;
+	struct timeval	timeout;
 
 	// sockfd = Socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ARP));
 	sockfd = Socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ARP));
@@ -17,8 +18,13 @@ readloop(void)
 	if (pr->finit)
 		(*pr->finit)();
 
-	size = 60 * 1024;		/* OK if setsockopt fails */
-	setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size));
+	// setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size));
+
+
+    // Set timeout for our program
+    timeout.tv_sec = store->timeout_sec;
+    timeout.tv_usec = 0;
+	setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&timeout, sizeof(timeout));
 
     struct ifreq ifr;
     char* ifname = "ens33";
@@ -73,10 +79,11 @@ readloop(void)
         printf("IP address: %s\n", inet_ntoa(ipaddr->sin_addr));
     }
 
-    for ( ; store->ip_index < 254 ; ) {
+
+    for ( ; store->ip_index < 255 ; ) {
 	    sig_alrm(SIGALRM);		/* send packet */
         // REVIEW: kinda weird, should fix this later
-        alarm(1); /* Then schedule it to run after 1 sec */
+        // alarm(1); /* Then schedule it to run after 1 sec */
     }
 
 	iov.iov_base = recvbuf;
@@ -88,15 +95,25 @@ readloop(void)
 	for ( ; ; ) {
 		msg.msg_namelen = pr->salen;
 		msg.msg_controllen = sizeof(controlbuf);
+
 		n = recvmsg(sockfd, &msg, 0);
 		if (n < 0) {
 			if (errno == EINTR)
 				continue;
+            else if (errno == EAGAIN) {
+                // Ring, ring, ring timeout!
+                if (verbose) {
+                    printf("Socket automatically timeout after %.1f secs of nonactivity\n", store->timeout_sec);
+                }
+                exit(0);
+            }
 			else
 				err_sys("recvmsg error");
 		}
 
-		Gettimeofday(&tval, NULL);
+        Gettimeofday(&tval, NULL);
+
+        // Process reply packet
 		(*pr->fproc)(recvbuf, n, &msg, &tval);
 	}
 }

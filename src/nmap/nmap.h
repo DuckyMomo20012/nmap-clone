@@ -43,11 +43,14 @@ struct proto {
 };
 
 struct store {
+  // REVIEW: Reorder data type for better alignment
   uint8_t req_sha[ETH_ALEN];	/* sender hardware (MAC) address */
   uint8_t req_spa[4];		/* sender protocol (IP) address */
-  char* file_name;
-  int ip_index;
-  int host_up;
+  char* file_name; /* file name to write found host */
+  int ip_index; /* check ip index of ARP. Send from .1 -> .254 */
+  int host_up; /* count host reply to ARP request */
+  double timeout_sec; /* timeout for receiving reply packets. This is set for socket options */
+  struct timeval start;
 };
 
 extern struct proto *pr;

@@ -118,6 +118,6 @@ make clean
 
 ## TODOs:
 
-- [ ] Stop after send complete
+- [x] Stop after send complete
 - [x] Change compiled target name
 - [x] Handle ARP reply
