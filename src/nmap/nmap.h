@@ -25,28 +25,27 @@ extern int verbose;
 
 
 /* function prototypes */
-void init_v6(void);
 void proc_v4(char *, ssize_t, struct msghdr *, struct timeval *);
-void proc_v6(char *, ssize_t, struct msghdr *, struct timeval *);
 void send_v4(void);
-void send_v6(void);
 void readloop(void);
 void sig_alrm(int);
 void tv_sub(struct timeval *, struct timeval *);
+void write_file(char* fileName, char* buff, char* mode);
 
 struct proto {
   void (*fproc)(char *, ssize_t, struct msghdr *, struct timeval *);
   void (*fsend)(void);
   void (*finit)(void);
+  void (*fwrite_file)(char* fileName, char* buff, char* mode);
   struct sockaddr *sasend; /* sockaddr{} for send, from getaddrinfo */
   struct sockaddr *sarecv; /* sockaddr{} for receiving */
   socklen_t salen;         /* length of sockaddr{}s */
-  int arpproto;            /* IPPROTO_xxx value for ICMP */
 };
 
 struct store {
   uint8_t req_sha[ETH_ALEN];	/* sender hardware (MAC) address */
   uint8_t req_spa[4];		/* sender protocol (IP) address */
+  char* file_name;
   int ip_index;
   int host_up;
 };

@@ -75,6 +75,7 @@ readloop(void)
 
     for ( ; store->ip_index < 254 ; ) {
 	    sig_alrm(SIGALRM);		/* send packet */
+        // REVIEW: kinda weird, should fix this later
         alarm(1); /* Then schedule it to run after 1 sec */
     }
 

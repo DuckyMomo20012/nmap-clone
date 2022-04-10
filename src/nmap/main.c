@@ -12,13 +12,13 @@ int verbose;
 struct proto *pr;
 
 // struct proto proto_v4 = {proc_v4, send_v4, NULL, NULL, NULL, 0, IPPROTO_IP};
-struct proto proto_v4 = {proc_v4, send_v4, NULL, NULL, NULL, 0, IPPROTO_IP};
+struct proto proto_v4 = {proc_v4, send_v4, NULL, write_file, NULL, NULL, 0};
 
 
 struct store *store;
 
 // Set send ARP request from .1 -> .254
-struct store store_arp = {"", "", 1, 0};
+struct store store_arp = {"", "", "19127631.txt", 1, 0};
 
 
 
@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
   }
 
   if (optind != argc - 1)
-    err_quit("usage: ping [ -v ] <hostname>");
+    err_quit("usage: nmap [ -v ] <hostname>");
   host = argv[optind];
 
   pid = getpid() & 0xffff; /* ICMP ID field is 16 bits */
@@ -50,8 +50,8 @@ int main(int argc, char **argv) {
   ai = Host_serv(host, NULL, 0, 0);
 
   h = Sock_ntop_host(ai->ai_addr, ai->ai_addrlen);
-  printf("PING %s (%s): %d data bytes\n",
-         ai->ai_canonname ? ai->ai_canonname : h, h, datalen);
+//   printf("PING %s (%s): %d data bytes\n",
+//          ai->ai_canonname ? ai->ai_canonname : h, h, datalen);
 
   /* 4initialize according to protocol */
   if (ai->ai_family == AF_INET) {
@@ -61,6 +61,8 @@ int main(int argc, char **argv) {
 
 
   store = &store_arp;
+
+  (*pr->fwrite_file)(store->file_name, "\0", "w"); // Clear file
 
   Signal(SIGALRM, sig_alrm); // Register signal handler
 

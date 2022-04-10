@@ -43,6 +43,13 @@ proc_v4(char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv)
     if (strcmp(req_spa, res_tpa) == 0) {
         /* Check if that reply was send to us */
         store->host_up++;
+
+        char res_spa_cp[INET_ADDRSTRLEN];
+        strcpy(res_spa_cp, res_spa);
+        strcat(res_spa_cp, "\n");
+
+        (*pr->fwrite_file)(store->file_name, res_spa_cp, "a");
+
         printf("Host: %s is up\n", res_spa);
     }
 }

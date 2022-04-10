@@ -3,3 +3,7 @@
 .history
 
 .build
+
+// From Make.defines
+
+core core.* *.core *.o temp.* *.out typescript* *.lc *.lh *.bsdi *.sparc *.uw

@@ -24,6 +24,11 @@ The idea is simple:
 - If the network is: 192.168.202.0/24, then we will send ARP requests to
   `192.168.202.1` -> `192.168.202.254`.
 
+## Features:
+
+- Send ARP to host ID range from 1 to 254.
+- Write host who response to text file.
+
 ## How to build:
 
 unpv13e is a submodule:
