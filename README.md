@@ -27,15 +27,24 @@ The idea is simple:
 ## Features:
 
 - Send ARP to host ID range from 1 to 254.
-- Write host who response to text file.
+- Write host who response to ARP request to text file.
 
 ## How to build:
 
-unpv13e is a submodule:
+unpv13e is a submodule, so you may have to clone repo recursively:
+
+```console
+git clone --recursive https://github.com/DuckyMomo20012/nmap-clone.git
+```
+
+<details>
+    <summary>How to setup git submodule</summary>
 
 ```console
 nmap-clone/src# git submodule add https://github.com/k84d/unpv13e.git unpv13e
 ```
+  
+</details>
 
 - Execute the following comands from the src/unpv13e directory:
 
@@ -95,10 +104,6 @@ make
 - Run program:
 
 > NOTE: Program must run with `sudo` privileges
-
-> NOTE: Although this is nmap project but I haven't fixed compiled execution
-> name from ping to
-> nmap. May fix later.
 
 ```console
 ./nmap 192.168.202.0
