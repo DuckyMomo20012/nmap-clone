@@ -1,4 +1,4 @@
-#include	"ping.h"
+#include	"nmap.h"
 
 void
 send_v4(void)

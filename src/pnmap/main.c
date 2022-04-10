@@ -1,4 +1,4 @@
-#include "ping.h"
+#include "nmap.h"
 
 char sendbuf[BUFSIZE];
 

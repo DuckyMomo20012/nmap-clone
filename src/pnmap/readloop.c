@@ -1,4 +1,4 @@
-#include	"ping.h"
+#include	"nmap.h"
 
 void
 readloop(void)

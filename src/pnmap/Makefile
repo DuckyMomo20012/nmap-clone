@@ -2,11 +2,11 @@ include ./Make.defines
 
 OBJS = main.o proc_v4.o readloop.o \
 		send_v4.o sig_alrm.o tv_sub.o
-PROGS =	ping
+PROGS =	nmap
 
 all:	${PROGS}
 
-ping:	${OBJS}
+nmap:	${OBJS}
 		${CC} ${CFLAGS} -o $@ ${OBJS} ${LIBS}
 
 clean:

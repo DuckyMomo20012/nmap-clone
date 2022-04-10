@@ -1,4 +1,4 @@
-#include	"ping.h"
+#include	"nmap.h"
 
 void
 proc_v4(char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv)
