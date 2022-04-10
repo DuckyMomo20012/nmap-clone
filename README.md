@@ -102,7 +102,7 @@ make
 To see more details:
 
 ```console
-./nmap 192.168.202.128 -v
+./nmap 192.168.202.0 -v
 ```
 
 - Cleanup file:
