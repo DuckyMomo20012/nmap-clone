@@ -96,13 +96,13 @@ make
 > nmap. May fix later.
 
 ```console
-./ping 192.168.202.128
+./nmap 192.168.202.0
 ```
 
 To see more details:
 
 ```console
-./ping 192.168.202.128 -v
+./nmap 192.168.202.128 -v
 ```
 
 - Cleanup file:
@@ -113,6 +113,6 @@ make clean
 
 ## TODOs:
 
-- [ ] Change compiled target name
 - [ ] Stop after send complete
+- [x] Change compiled target name
 - [x] Handle ARP reply
