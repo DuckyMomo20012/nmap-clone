@@ -31,9 +31,7 @@ readloop(void)
     }
     int ifindex = ifr.ifr_ifindex;
 
-    // NOTE: When printf, remember to add "\n"!!!
 
-    printf("Interface index is %d\n", ifindex);
 
     //Get MAC address of the interface
     if (ioctl(sockfd, SIOCGIFHWADDR, &ifr) == -1) {
@@ -43,16 +41,9 @@ readloop(void)
     //Copy mac address to output
     unsigned char mac[6];
     memcpy(mac, ifr.ifr_hwaddr.sa_data, 6);
-    printf("MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
-          mac[0],
-          mac[1],
-          mac[2],
-          mac[3],
-          mac[4],
-          mac[5]);
 
     // Copy mac address to proto
-    memcpy (pr->pr_sha, ifr.ifr_hwaddr.sa_data, 6);
+    memcpy (store->req_sha, ifr.ifr_hwaddr.sa_data, 6);
 
     //Get IP address of the interface
     if (ioctl(sockfd, SIOCGIFADDR, &ifr) == -1) {
@@ -60,26 +51,27 @@ readloop(void)
     }
     //Print IP address
     struct sockaddr_in* ipaddr = (struct sockaddr_in*)&ifr.ifr_addr;
-    printf("IP address: %s\n", inet_ntoa(ipaddr->sin_addr));
+
 
     // Copy ip address to proto
     // 2 first bytes is empty
-    memcpy(pr->pr_spa, ifr.ifr_addr.sa_data + 2, 4);
+    memcpy(store->req_spa, ifr.ifr_addr.sa_data + 2, 4);
 
-    // //Get MAC broadcast address of the interface
-    // if (ioctl(sockfd, SIOCGIFBRDADDR, &ifr) == -1) {
-    //     err_sys("SIOCGIFBRDADDR");
-    // }
+    // NOTE: When printf, remember to add "\n"!!!
+    if (verbose) {
+        printf("Interface index is %d\n", ifindex);
 
-    // unsigned char bdcast[6];
-    // memcpy(bdcast, ifr.ifr_broadaddr.sa_data, sizeof ifr.ifr_broadaddr.sa_data);
-    // printf("MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
-    //       bdcast[0],
-    //       bdcast[1],
-    //       bdcast[2],
-    //       bdcast[3],
-    //       bdcast[4],
-    //       bdcast[5]);
+        printf("MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
+            mac[0],
+            mac[1],
+            mac[2],
+            mac[3],
+            mac[4],
+            mac[5]);
+
+
+        printf("IP address: %s\n", inet_ntoa(ipaddr->sin_addr));
+    }
 
 	sig_alrm(SIGALRM);		/* send first packet */
 

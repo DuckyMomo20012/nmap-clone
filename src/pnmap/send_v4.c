@@ -13,10 +13,10 @@ send_v4(void)
 	arp = (struct ether_arp *) (sendbuf + sizeof(struct ether_header));
 
     //Source MAC Address : ARP Packet
-    memcpy(arp->arp_sha, pr->pr_sha, ETH_ALEN);
+    memcpy(arp->arp_sha, store->req_sha, ETH_ALEN);
 
     //Source IP Address : ARP Packet
-    memcpy(arp->arp_spa, pr->pr_spa, 4);
+    memcpy(arp->arp_spa, store->req_spa, 4);
 
     //Target Mac : Destination Mac Address : ARP Packet
     memset(arp->arp_tha, 0x00, ETH_ALEN);
@@ -26,8 +26,10 @@ send_v4(void)
     // inet_pton(AF_INET, "192.168.202.129", arp->arp_tpa);
 
     char dst_ip[INET_ADDRSTRLEN];
-    sprintf(dst_ip, "%i.%i.%i.%i", pr->pr_spa[0], pr->pr_spa[1], pr->pr_spa[2], pr->ip_index);
-    printf("Ask: %s\n", dst_ip);
+    sprintf(dst_ip, "%i.%i.%i.%i", store->req_spa[0], store->req_spa[1], store->req_spa[2], store->ip_index);
+    if (verbose) {
+        printf("Ask: %s\n", dst_ip);
+    }
     inet_pton(AF_INET, dst_ip, arp->arp_tpa);
 
     //Ethernet Packet
@@ -49,10 +51,10 @@ send_v4(void)
 
     device.sll_ifindex = 2;
     device.sll_family = AF_PACKET;
-    memcpy (device.sll_addr, pr->pr_sha, 6 * sizeof (uint8_t));
+    memcpy (device.sll_addr, store->req_sha, 6 * sizeof (uint8_t));
     device.sll_halen = htons (6);
 
-    pr->ip_index++;
+    store->ip_index++;
 
 	Sendto(sockfd, sendbuf, len, 0, (struct sockaddr *) &device, sizeof (device));
 }

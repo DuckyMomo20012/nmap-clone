@@ -15,9 +15,11 @@ Simulate nmap command
 
 ## Description:
 
+> NOTE: Currently support class D (/24) addresses.
+
 The idea is simple:
 
-- ICMP packets on some OS may be blocked, so will send ARP packets, because
+- When we ping, ICMP packets on some OS may be blocked, so we will send ARP packets, because
   everyone has to answer ARP packets.
 - If the network is: 192.168.202.0/24, then we will send ARP requests to
   `192.168.202.1` -> `192.168.202.254`.
@@ -30,34 +32,29 @@ unpv13e is a submodule:
 nmap-clone/src# git submodule add https://github.com/k84d/unpv13e.git unpv13e
 ```
 
-- Execute the following from the src/unpv13e directory:
+- Execute the following comands from the src/unpv13e directory:
 
 > After clone this nmap-clone project, you have to build unpv13e lib, you don't
 > have to push commit to unpv13e
 
 ```
-    ./configure    # try to figure out all implementation differences
-
-    cd lib         # build the basic library that all programs need
-    make           # use "gmake" everywhere on BSD/OS systems
-
-    cd ../libfree  # continue building the basic library
-    make
-
-    cd ../libroute # only if your system supports 4.4BSD style routing sockets
-    make           # only if your system supports 4.4BSD style routing sockets
-
-    cd ../libxti   # only if your system supports XTI
-    make           # only if your system supports XTI
-
-    cd ../intro    # build and test a basic client program
-    make daytimetcpcli
-    ./daytimetcpcli 127.0.0.1
+./configure    # try to figure out all implementation differences
+cd lib         # build the basic library that all programs need
+make           # use "gmake" everywhere on BSD/OS systems
+cd ../libfree  # continue building the basic library
+make
+cd ../libroute # only if your system supports 4.4BSD style routing sockets
+make           # only if your system supports 4.4BSD style routing sockets
+cd ../libxti   # only if your system supports XTI
+make           # only if your system supports XTI
+cd ../intro    # build and test a basic client program
+make daytimetcpcli
+./daytimetcpcli 127.0.0.1
 ```
 
 - After build unpv13e, you will have a file `Makefie.defines`.
 - Copy it from unpv13e to `pnmap`.
-- Change "`../`" to "`../unpv13e/`"
+- In `Makefile.defines`, replace "`../`" with "`../unpv13e/`"
 
 <details>
     <summary>Examples</summary>
@@ -94,8 +91,18 @@ make
 
 > NOTE: Program must run with `sudo` privileges
 
+> NOTE: Although this is nmap project but I haven't fixed compiled execution
+> name from ping to
+> nmap. May fix later.
+
 ```console
 ./ping 192.168.202.128
+```
+
+To see more details:
+
+```console
+./ping 192.168.202.128 -v
 ```
 
 - Cleanup file:
@@ -107,4 +114,4 @@ make clean
 ## TODOs:
 
 - [ ] Change compiled target name
-- [ ] Handle ARP reply
+- [x] Handle ARP reply

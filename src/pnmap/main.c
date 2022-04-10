@@ -14,6 +14,14 @@ struct proto *pr;
 // struct proto proto_v4 = {proc_v4, send_v4, NULL, NULL, NULL, 0, IPPROTO_IP};
 struct proto proto_v4 = {proc_v4, send_v4, NULL, NULL, NULL, 0, IPPROTO_IP};
 
+
+struct store *store;
+
+// Set send ARP request from .1 -> .254
+struct store store_arp = {"", "", 1, 0};
+
+
+
 int datalen = 28; /* default arp packet size */
 
 int main(int argc, char **argv) {
@@ -39,8 +47,6 @@ int main(int argc, char **argv) {
 
   pid = getpid() & 0xffff; /* ICMP ID field is 16 bits */
 
-
-
   ai = Host_serv(host, NULL, 0, 0);
 
   h = Sock_ntop_host(ai->ai_addr, ai->ai_addrlen);
@@ -53,8 +59,8 @@ int main(int argc, char **argv) {
   } else
     err_quit("unknown address family %d", ai->ai_family);
 
-  // Set send ARP request from .1 -> .254
-  pr->ip_index = 1;
+
+  store = &store_arp;
 
   Signal(SIGALRM, sig_alrm);
 

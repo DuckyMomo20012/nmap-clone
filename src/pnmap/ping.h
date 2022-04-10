@@ -42,9 +42,14 @@ struct proto {
   struct sockaddr *sarecv; /* sockaddr{} for receiving */
   socklen_t salen;         /* length of sockaddr{}s */
   int arpproto;            /* IPPROTO_xxx value for ICMP */
-  uint8_t pr_sha[ETH_ALEN];	/* sender hardware (MAC) address */
-  uint8_t pr_spa[4];		/* sender protocol (IP) address */
+};
+
+struct store {
+  uint8_t req_sha[ETH_ALEN];	/* sender hardware (MAC) address */
+  uint8_t req_spa[4];		/* sender protocol (IP) address */
   int ip_index;
+  int host_up;
 };
 
 extern struct proto *pr;
+extern struct store *store;
