@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
 
   store = &store_arp;
 
-  Signal(SIGALRM, sig_alrm);
+  Signal(SIGALRM, sig_alrm); // Register signal handler
 
   pr->sasend = ai->ai_addr;
   pr->sarecv = Calloc(1, ai->ai_addrlen);

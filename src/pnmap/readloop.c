@@ -73,7 +73,10 @@ readloop(void)
         printf("IP address: %s\n", inet_ntoa(ipaddr->sin_addr));
     }
 
-	sig_alrm(SIGALRM);		/* send first packet */
+    for ( ; store->ip_index < 254 ; ) {
+	    sig_alrm(SIGALRM);		/* send packet */
+        alarm(1); /* Then schedule it to run after 1 sec */
+    }
 
 	iov.iov_base = recvbuf;
 	iov.iov_len = sizeof(recvbuf);

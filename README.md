@@ -114,4 +114,5 @@ make clean
 ## TODOs:
 
 - [ ] Change compiled target name
+- [ ] Stop after send complete
 - [x] Handle ARP reply
