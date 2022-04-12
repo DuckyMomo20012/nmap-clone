@@ -1,19 +1,28 @@
 # A clone of nmap.
 
-Simulate nmap command
+Simulate nmap, ping command
 
 <table>
   <tr>
     <th>OS</th>
-    <td>Debian 11</td>
+    <th>gcc, g++</th>
+    <th>Tested</th>
   </tr>
   <tr>
-    <th>gcc, g++</th>
+    <td>Debian 11</td>
     <td>10.2.1</td>
+    <td>Passed ✔</td>
+  </tr>
+  <tr>
+    <td>Ubuntu 21.10</td>
+    <td>11.2.*</td>
+    <td>Failed ❌</td>
   </tr>
 </table>
 
 ## Description:
+
+**nmap:**
 
 > NOTE: Currently support class D (/24) addresses.
 
@@ -24,10 +33,15 @@ The idea is simple:
 - If the network is: 192.168.202.0/24, then we will send ARP requests to
   `192.168.202.1` -> `192.168.202.254`.
 
+**ping:**
+
+- Send ICMP request to target IP.
+
 ## Features:
 
 - Send ARP to host ID range from 1 to 254.
 - Write host who response to ARP request to text file.
+- Ping command
 
 ## How to build:
 
@@ -38,12 +52,12 @@ git clone --recursive https://github.com/DuckyMomo20012/nmap-clone.git
 ```
 
 <details>
-    <summary>How to setup git submodule</summary>
+    <summary>How to setup git submodule manually</summary>
 
 ```console
 nmap-clone/src# git submodule add https://github.com/k84d/unpv13e.git unpv13e
 ```
-  
+
 </details>
 
 - Execute the following comands from the src/unpv13e directory:
@@ -67,7 +81,7 @@ make daytimetcpcli
 ```
 
 - After build unpv13e, you will have a file `Makefie.defines`.
-- Copy it from unpv13e to `pnmap`.
+- Copy it from unpv13e to `nmap`.
 - In `Makefile.defines`, replace "`../`" with "`../unpv13e/`"
 
 <details>
@@ -87,9 +101,19 @@ LIBUNPXTI_NAME = `../unpv13e/`libunpxti.a
 
 - Change directory to folder
 
+**nmap:**
+
 ```console
-cd ./src/pnmap
+cd ./src/nmap
 ```
+
+**ping:**
+
+```console
+cd ./src/ping
+```
+
+-
 
 - Build file:
 
@@ -105,6 +129,8 @@ make
 
 > NOTE: Program must run with `sudo` privileges
 
+**nmap:**
+
 ```console
 ./nmap 192.168.202.0
 ```
@@ -113,6 +139,18 @@ To see more details:
 
 ```console
 ./nmap 192.168.202.0 -v
+```
+
+**ping:**
+
+```console
+./ping 192.168.202.129
+```
+
+To see more details:
+
+```console
+./ping 192.168.202.129 -v
 ```
 
 - Cleanup file:
