@@ -50,7 +50,7 @@ struct store {
   int ip_index; /* check ip index of ARP. Send from .1 -> .254 */
   int host_up; /* count host reply to ARP request */
   double timeout_sec; /* timeout for receiving reply packets. This is set for socket options */
-  struct timeval start;
+  char ifname[IFNAMSIZ]; /* interface network to inspect */
 };
 
 extern struct proto *pr;

@@ -15,8 +15,8 @@ Simulate nmap, ping command
   </tr>
   <tr>
     <td>Ubuntu 21.10</td>
-    <td>11.2.*</td>
-    <td>Failed ❌</td>
+    <td>11.2.0</td>
+    <td>Passed ✔</td>
   </tr>
 </table>
 

@@ -27,9 +27,10 @@ readloop(void)
 	setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&timeout, sizeof(timeout));
 
     struct ifreq ifr;
-    char* ifname = "ens33";
 
-    strcpy(ifr.ifr_name, ifname);
+    sprintf(ifr.ifr_name, "%s", store->ifname);
+
+    // strcpy(ifr.ifr_name, store->ifname);
 
     //Get interface index using name
     if (ioctl(sockfd, SIOCGIFINDEX, &ifr) == -1) {

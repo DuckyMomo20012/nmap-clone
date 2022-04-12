@@ -44,9 +44,12 @@ proc_v4(char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv)
         /* Check if that reply was send to us */
         store->host_up++;
 
-        char res_spa_cp[INET_ADDRSTRLEN];
-        strcpy(res_spa_cp, res_spa);
-        strcat(res_spa_cp, "\n");
+        char res_spa_cp[INET_ADDRSTRLEN + 1]; /* add 1 byte for \n to fix buffer overflow */
+        sprintf(res_spa_cp, "%s\n", res_spa);
+
+        // Buffer overflow because we copied array char INET_ADDRSTRLEN size to
+        // INET_ADDRSTRLEN + 1 (added \n) -> Error
+        // strcpy(res_spa_cp, res_spa);
 
         (*pr->fwrite_file)(store->file_name, res_spa_cp, "a");
 
