@@ -35,13 +35,15 @@ The idea is simple:
 
 **ping:**
 
+> NOTE: Currently support IPv4 ping.
+
 - Send ICMP request to target IP.
 
 ## Features:
 
 - Send ARP to host ID range from 1 to 254.
 - Write host who response to ARP request to text file.
-- Ping command
+- Ping command.
 
 ## How to build:
 
@@ -112,8 +114,6 @@ cd ./src/nmap
 ```console
 cd ./src/ping
 ```
-
--
 
 - Build file:
 
