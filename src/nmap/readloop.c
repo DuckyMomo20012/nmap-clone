@@ -3,7 +3,6 @@
 void
 readloop(void)
 {
-	int				size;
 	char			recvbuf[BUFSIZE];
 	char			controlbuf[BUFSIZE];
 	struct msghdr	msg;

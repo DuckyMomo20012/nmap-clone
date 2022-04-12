@@ -21,13 +21,10 @@ struct store *store;
 struct store store_arp = {"", "", "19127631.txt", 1, 0, 5.0, "ens33"};
 
 
-
-int datalen = 28; /* default arp packet size */
-
 int main(int argc, char **argv) {
   int c;
   struct addrinfo *ai;
-  char *h;
+//   char *h;
 
   opterr = 0; /* don't want getopt() writing to stderr */
   while ((c = getopt(argc, argv, "v")) != -1) {
@@ -56,7 +53,7 @@ int main(int argc, char **argv) {
 
   ai = Host_serv(host, NULL, 0, 0);
 
-  h = Sock_ntop_host(ai->ai_addr, ai->ai_addrlen);
+//   h = Sock_ntop_host(ai->ai_addr, ai->ai_addrlen);
 //   printf("PING %s (%s): %d data bytes\n",
 //          ai->ai_canonname ? ai->ai_canonname : h, h, datalen);
 

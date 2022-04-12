@@ -3,10 +3,10 @@
 void
 proc_v4(char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv)
 {
-    struct ether_header * eth;
+    // struct ether_header * eth;
     struct ether_arp *arp;
 
-	eth = (struct ether_header *) ptr;
+	// eth = (struct ether_header *) ptr;
 
     // printf("MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
     //       eth->ether_dhost[0],

@@ -51,8 +51,8 @@ send_v4(void)
 
     device.sll_ifindex = 2;
     device.sll_family = AF_PACKET;
-    memcpy (device.sll_addr, store->req_sha, 6 * sizeof (uint8_t));
-    device.sll_halen = htons (6);
+    memcpy(device.sll_addr, store->req_sha, ETH_ALEN);
+    device.sll_halen = htons(ETH_ALEN);
 
     store->ip_index++;
 
