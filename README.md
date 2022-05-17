@@ -47,6 +47,12 @@ The idea is simple:
 
 ## How to build:
 
+NOTE: If you have write file issues when SSH, run command:
+
+```bash
+sudo chown -R "username": "folderName"
+```
+
 unpv13e is a submodule, so you may have to clone repo recursively:
 
 ```console
@@ -62,7 +68,7 @@ nmap-clone/src# git submodule add https://github.com/k84d/unpv13e.git unpv13e
 
 </details>
 
-- Execute the following comands from the src/unpv13e directory:
+- Execute the following commands from the src/unpv13e directory:
 
 > After clone this nmap-clone project, you have to build unpv13e lib, you don't
 > have to push commit to unpv13e
