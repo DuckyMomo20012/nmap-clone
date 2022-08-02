@@ -82,9 +82,16 @@
 
 This project requires the following prerequisites:
 
+- Operating system: `Linux` and `macOS`.
+
+  > **NOTE**: This app only supports `Linux` and `macOS`. Currently not
+  > supporting `Windows`.
+
 - GCC, G++: >= 10.2.1
 - GDB
 - make
+
+Install GCC, G++, GDB, and make:
 
 ```bash
 sudo apt update
@@ -390,6 +397,11 @@ Please read the [Code of Conduct](https://github.com/DuckyMomo20012/nmap-clone/b
 - Is this project still maintained?
 
   - No, but I will only update documentation.
+
+- Are you planning to support Windows OS in the future?
+
+  - No, we are not adding support for Windows any time soon (and most likely
+    never).
 
 <!-- License -->
 
