@@ -47,10 +47,11 @@ struct store {
   uint8_t req_sha[ETH_ALEN];	/* sender hardware (MAC) address */
   uint8_t req_spa[4];		/* sender protocol (IP) address */
   char* file_name; /* file name to write found host */
-  int ip_index; /* check ip index of ARP. Send from .1 -> .254 */
+  int ip_index; /* start index to send ARP request. End at .254 */
   int host_up; /* count host reply to ARP request */
   double timeout_sec; /* timeout for receiving reply packets. This is set for socket options */
   char ifname[IFNAMSIZ]; /* interface network to inspect */
+  int ifindex; /* interface index */
 };
 
 extern struct proto *pr;

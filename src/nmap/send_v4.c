@@ -49,7 +49,7 @@ send_v4(void)
     // Ethernet frame length = ethernet header (MAC + MAC + ethernet type) + ethernet data (ARP header)
     len = 6 + 6 + 2 + 28;
 
-    device.sll_ifindex = 2;
+    device.sll_ifindex = store->ifindex;
     device.sll_family = AF_PACKET;
     memcpy(device.sll_addr, store->req_sha, ETH_ALEN);
     device.sll_halen = htons(ETH_ALEN);

@@ -37,7 +37,7 @@ readloop(void)
     }
     int ifindex = ifr.ifr_ifindex;
 
-
+    store->ifindex = ifindex;
 
     //Get MAC address of the interface
     if (ioctl(sockfd, SIOCGIFHWADDR, &ifr) == -1) {
