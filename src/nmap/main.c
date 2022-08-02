@@ -17,7 +17,7 @@ struct proto proto_v4 = {proc_v4, send_v4, NULL, write_file, NULL, NULL, 0};
 struct store *store;
 
 // Set send ARP request from .1 -> .254
-struct store store_arp = {"", "", "19127631.txt", 1, 0, 5.0, "ens33"};
+struct store store_arp = {"", "", 0, 0, "log.txt", 1, 5.0, "wlx0013eff82745"};
 
 
 int main(int argc, char **argv) {

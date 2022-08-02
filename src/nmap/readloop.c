@@ -27,15 +27,15 @@ readloop(void)
 
     struct ifreq ifr;
 
-    sprintf(ifr.ifr_name, "%s", store->ifname);
+    sprintf(ifr.ifr_name, "%s", store->if_name);
 
     //Get interface index using name
     if (ioctl(sockfd, SIOCGIFINDEX, &ifr) == -1) {
         err_sys("SIOCGIFINDEX");
     }
-    int ifindex = ifr.ifr_ifindex;
+    int if_index = ifr.ifr_ifindex;
 
-    store->ifindex = ifindex;
+    store->if_index = if_index;
 
     //Get MAC address of the interface
     if (ioctl(sockfd, SIOCGIFHWADDR, &ifr) == -1) {
@@ -63,7 +63,7 @@ readloop(void)
 
     // NOTE: When printf, remember to add "\n"!!!
     if (verbose) {
-        printf("Interface index is %d\n", ifindex);
+        printf("Interface index is %d\n", if_index);
 
         printf("MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
             mac[0],
