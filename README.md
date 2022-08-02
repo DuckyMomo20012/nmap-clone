@@ -68,8 +68,8 @@
 
 ### :dart: Features
 
-- Send ARP to host ID range from 1 to 254.
-- Write host who response to ARP request to text file.
+- Send ARP to host ID ranging from 1 to 254.
+- Log host who responds to ARP request to a text file.
 - Ping command.
 
 <!-- Getting Started -->
@@ -82,7 +82,7 @@
 
 This project requires the following prerequisites:
 
-- GCC, G++ >= 10.2.1
+- GCC, G++: >= 10.2.1
 - GDB
 - make
 
@@ -127,8 +127,8 @@ make daytimetcpcli
 ./daytimetcpcli 127.0.0.1
 ```
 
-Next, you will need file `Make.defines` to compile necessary library, you can
-use sample file in folder `nmap` and `ping`.
+Next, you will need a file `Make.defines` to compile necessary libraries, you
+can use sample file in folder `nmap` and `ping`.
 
 OR:
 
@@ -172,6 +172,9 @@ Build `nmap` and `ping` program:
 
 - **nmap:**
 
+  > NOTE: You have to change your interface network name in file
+  > `src/nmap/main.c`. Go to [Usage](#eyes-usage) for more information.
+
   - Go to the `nmap` directory:
 
     ```bash
@@ -187,7 +190,7 @@ Build `nmap` and `ping` program:
   - Run `nmap` program:
 
     ```bash
-    sudo ./nmap 192.168.202.0
+    sudo ./nmap 192.168.202.3
     ```
 
 - **ping:**
@@ -214,7 +217,7 @@ Build `nmap` and `ping` program:
 
 ## :eyes: Usage
 
-> NOTE: Program must run with `sudo` privileges
+> NOTE: `nmap` and `ping` programs MUST run with `sudo` privileges.
 
 **nmap:**
 
@@ -222,15 +225,50 @@ Build `nmap` and `ping` program:
 
 The idea is simple:
 
-- When we ping, ICMP packets on some OS may be blocked, so we will send ARP packets, because
-  everyone has to answer ARP packets.
+- When we ping, ICMP packets on some OS may be blocked, so we will send ARP
+  packets because everyone has to answer ARP packets.
 - If the network is: 192.168.202.0/24, then we will send ARP requests to
   `192.168.202.1` -> `192.168.202.254`.
 
 - To see more details:
 
-  ```console
+  ```bash
   sudo ./nmap 192.168.202.0 -v
+  ```
+
+Configuration:
+
+- In file `src/nmap/main.c`, you can set your own configurations:
+
+  ```C
+  struct store store_arp = {"", "", 0, "log.txt", 1, 5.0, "wlx0013eff82745"};
+  ```
+
+- Struct `store_arp` in file `src/nmap/nmap.h`. You should only set these
+  options below:
+
+  ```C
+  struct store {
+    ...
+    char* file_name; /* file name to write found host */
+    int ip_index; /* start index to send ARP request. End at .254 */
+    double timeout_sec; /* timeout (second) for receiving reply packets. This is set for socket options */
+    char if_name[IFNAMSIZ]; /* interface network to inspect */
+  };
+  ```
+
+- To make `nmap` program works, you have to set your interface network name in
+  file `src/nmap/main.c`. E.g: `wlx0013eff82745`, `ens33`. You can find your
+  interface network name in your system by:
+
+  ```bash
+  ifconfig
+  ```
+
+  OR:
+
+  ```bash
+  ip address
   ```
 
 **ping:**
@@ -257,8 +295,8 @@ make clean
 
 ## :mag: Debugging
 
-`nmap` and `ping` program are required to run with `sudo` privileges. So you
-have to create a file name `gdb` in home directory and make it executable:
+`nmap` and `ping` programs are required to run with `sudo` privileges. So you
+have to create a file name `gdb` in the home directory and make it executable:
 
 ```bash
 pkexec /usr/bin/gdb "$@"
@@ -325,7 +363,7 @@ Reference: https://stackoverflow.com/a/58206689/12512981
 
 ## :compass: Roadmap
 
-- [x] Stop after send complete.
+- [x] Stop after sending process is complete.
 - [x] Change compiled target name.
 - [x] Handle ARP reply.
 
