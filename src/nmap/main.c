@@ -11,7 +11,6 @@ int verbose;
 
 struct proto *pr;
 
-// struct proto proto_v4 = {proc_v4, send_v4, NULL, NULL, NULL, 0, IPPROTO_IP};
 struct proto proto_v4 = {proc_v4, send_v4, NULL, write_file, NULL, NULL, 0};
 
 
@@ -24,7 +23,7 @@ struct store store_arp = {"", "", "19127631.txt", 1, 0, 5.0, "ens33"};
 int main(int argc, char **argv) {
   int c;
   struct addrinfo *ai;
-//   char *h;
+  // char *h;
 
   opterr = 0; /* don't want getopt() writing to stderr */
   while ((c = getopt(argc, argv, "v")) != -1) {
@@ -66,7 +65,7 @@ int main(int argc, char **argv) {
 
   store = &store_arp;
 
-  (*pr->fwrite_file)(store->file_name, "\0", "w"); // Clear file
+  (*pr->fwrite_file)(store->file_name, "\0", "w"); // Open and clear file for new data
 
   Signal(SIGALRM, sig_alrm); // Register signal handler
 

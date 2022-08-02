@@ -3,9 +3,10 @@
 void
 proc_v4(char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv)
 {
-    // struct ether_header * eth;
     struct ether_arp *arp;
 
+    // NOTE: Uncomment this if you want to inspect ethernet header
+    // struct ether_header * eth;
 	// eth = (struct ether_header *) ptr;
 
     // printf("MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
@@ -16,6 +17,8 @@ proc_v4(char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv)
     //       eth->ether_dhost[4],
     //       eth->ether_dhost[5]);
 
+    // Skip ethernet header: 6 (ether_dhost) + 6 (ether_shost) + 2 (ether_type)
+    // = 14 bytes
     arp = (struct ether_arp *) (ptr + 14);
 
     // printf("hrd %04X\n", htons(arp->arp_hrd));
@@ -44,13 +47,14 @@ proc_v4(char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv)
         /* Check if that reply was send to us */
         store->host_up++;
 
-        char res_spa_cp[INET_ADDRSTRLEN + 1]; /* add 1 byte for \n to fix buffer overflow */
-        sprintf(res_spa_cp, "%s\n", res_spa);
-
         // Buffer overflow because we copied array char INET_ADDRSTRLEN size to
         // INET_ADDRSTRLEN + 1 (added \n) -> Error
-        // strcpy(res_spa_cp, res_spa);
 
+        char res_spa_cp[INET_ADDRSTRLEN + 1]; /* 1 is sizeof "\n" */
+        sprintf(res_spa_cp, "%s\n", res_spa);
+
+
+        // Write to file with append mode
         (*pr->fwrite_file)(store->file_name, res_spa_cp, "a");
 
         printf("Host: %s is up\n", res_spa);

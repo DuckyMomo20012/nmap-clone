@@ -49,7 +49,7 @@ struct store {
   char* file_name; /* file name to write found host */
   int ip_index; /* start index to send ARP request. End at .254 */
   int host_up; /* count host reply to ARP request */
-  double timeout_sec; /* timeout for receiving reply packets. This is set for socket options */
+  double timeout_sec; /* timeout (second) for receiving reply packets. This is set for socket options */
   char ifname[IFNAMSIZ]; /* interface network to inspect */
   int ifindex; /* interface index */
 };

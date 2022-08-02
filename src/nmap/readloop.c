@@ -11,12 +11,12 @@ readloop(void)
 	struct timeval	tval;
 	struct timeval	timeout;
 
-	// sockfd = Socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ARP));
 	sockfd = Socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ARP));
 	setuid(getuid());		/* don't need special permissions any more */
 	if (pr->finit)
 		(*pr->finit)();
 
+    // For setting socket without timeout
 	// setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size));
 
 
@@ -28,8 +28,6 @@ readloop(void)
     struct ifreq ifr;
 
     sprintf(ifr.ifr_name, "%s", store->ifname);
-
-    // strcpy(ifr.ifr_name, store->ifname);
 
     //Get interface index using name
     if (ioctl(sockfd, SIOCGIFINDEX, &ifr) == -1) {
