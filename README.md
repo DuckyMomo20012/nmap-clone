@@ -1,77 +1,115 @@
-# A clone of nmap.
+<div align="center">
 
-Simulate nmap, ping command
+  <h1>nmap Clone</h1>
 
-<table>
-  <tr>
-    <th>OS</th>
-    <th>gcc, g++</th>
-    <th>Tested</th>
-  </tr>
-  <tr>
-    <td>Debian 11</td>
-    <td>10.2.1</td>
-    <td>Passed ✔</td>
-  </tr>
-  <tr>
-    <td>Ubuntu 21.10</td>
-    <td>11.2.0</td>
-    <td>Passed ✔</td>
-  </tr>
-</table>
+  <p>
+    Simulate nmap, ping command
+  </p>
 
-## Description:
+<!-- Badges -->
+<p>
+  <a href="https://github.com/DuckyMomo20012/nmap-clone/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/DuckyMomo20012/nmap-clone" alt="contributors" />
+  </a>
+  <a href="">
+    <img src="https://img.shields.io/github/last-commit/DuckyMomo20012/nmap-clone" alt="last update" />
+  </a>
+  <a href="https://github.com/DuckyMomo20012/nmap-clone/network/members">
+    <img src="https://img.shields.io/github/forks/DuckyMomo20012/nmap-clone" alt="forks" />
+  </a>
+  <a href="https://github.com/DuckyMomo20012/nmap-clone/stargazers">
+    <img src="https://img.shields.io/github/stars/DuckyMomo20012/nmap-clone" alt="stars" />
+  </a>
+  <a href="https://github.com/DuckyMomo20012/nmap-clone/issues/">
+    <img src="https://img.shields.io/github/issues/DuckyMomo20012/nmap-clone" alt="open issues" />
+  </a>
+  <a href="https://github.com/DuckyMomo20012/nmap-clone/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/DuckyMomo20012/nmap-clone.svg" alt="license" />
+  </a>
+</p>
 
-**nmap:**
+<h4>
+    <a href="https://github.com/DuckyMomo20012/nmap-clone/">View Demo</a>
+  <span> · </span>
+    <a href="https://github.com/DuckyMomo20012/nmap-clone">Documentation</a>
+  <span> · </span>
+    <a href="https://github.com/DuckyMomo20012/nmap-clone/issues/">Report Bug</a>
+  <span> · </span>
+    <a href="https://github.com/DuckyMomo20012/nmap-clone/issues/">Request Feature</a>
+  </h4>
+</div>
 
-> NOTE: Currently support class D (/24) addresses.
+<br />
 
-The idea is simple:
+<!-- Table of Contents -->
 
-- When we ping, ICMP packets on some OS may be blocked, so we will send ARP packets, because
-  everyone has to answer ARP packets.
-- If the network is: 192.168.202.0/24, then we will send ARP requests to
-  `192.168.202.1` -> `192.168.202.254`.
+# :notebook_with_decorative_cover: Table of Contents
 
-**ping:**
+- [About the Project](#star2-about-the-project)
+  - [Features](#dart-features)
+- [Getting Started](#toolbox-getting-started)
+  - [Prerequisites](#bangbang-prerequisites)
+  - [Run Locally](#running-run-locally)
+- [Usage](#eyes-usage)
+- [Roadmap](#compass-roadmap)
+- [Contributing](#wave-contributing)
+  - [Code of Conduct](#scroll-code-of-conduct)
+- [FAQ](#grey_question-faq)
+- [License](#warning-license)
+- [Contact](#handshake-contact)
+- [Acknowledgements](#gem-acknowledgements)
 
-> NOTE: Currently support IPv4 ping.
+<!-- About the Project -->
 
-- Send ICMP request to target IP.
+## :star2: About the Project
 
-## Features:
+<!-- Features -->
+
+### :dart: Features
 
 - Send ARP to host ID range from 1 to 254.
 - Write host who response to ARP request to text file.
 - Ping command.
 
-## How to build:
+<!-- Getting Started -->
 
-NOTE: If you have write file issues when SSH, run command:
+## :toolbox: Getting Started
+
+<!-- Prerequisites -->
+
+### :bangbang: Prerequisites
+
+This project requires the following prerequisites:
+
+- GCC, G++ >= 10.2.1
+- GDB
+- make
 
 ```bash
-sudo chown -R "username": "folderName"
+sudo apt update
+sudo apt install build-essential
 ```
 
-unpv13e is a submodule, so you may have to clone repo recursively:
+<!-- Run Locally -->
 
-```console
+### :running: Run Locally
+
+Clone the project:
+
+[unpv13e](https://github.com/k84d/unpv13e) is a submodule, so you have to clone
+repo recursively:
+
+```bash
 git clone --recursive https://github.com/DuckyMomo20012/nmap-clone.git
 ```
 
-<details>
-    <summary>How to setup git submodule manually</summary>
+Go to the `unpv13e` directory:
 
-```console
-nmap-clone/src# git submodule add https://github.com/k84d/unpv13e.git unpv13e
+```bash
+cd unpv13e
 ```
 
-</details>
-
-- Execute the following commands from the src/unpv13e directory:
-
-> After clone this nmap-clone project, you have to build unpv13e lib, you don't
-> have to push commit to unpv13e
+Build `unpv13e`:
 
 ```
 ./configure    # try to figure out all implementation differences
@@ -88,85 +126,185 @@ make daytimetcpcli
 ./daytimetcpcli 127.0.0.1
 ```
 
-- After build unpv13e, you will have a file `Makefie.defines`.
-- Copy it from unpv13e to `nmap`.
-- In `Makefile.defines`, replace "`../`" with "`../unpv13e/`"
+Next, you will need file `Make.defines` to compile necessary library, you can
+use sample file in folder `nmap` and `ping`.
+
+OR:
+
+You can create it manually:
 
 <details>
-    <summary>Examples</summary>
+<summary>Instructions</summary>
 
-CFLAGS = -I`../unpv13e/`lib -g -O2 -D_REENTRANT -Wall
-LIBS = `../unpv13e/`libunp.a -lpthread
-LIBS_XTI = `../unpv13e/`libunpxti.a `../unpv13e/`libunp.a -lpthread
+- After building `unpv13e`, you will have a file `Make.defines.in`.
+- Copy file `Make.defines.in` from folder `unpv13e` to folder `nmap` and
+  **rename to `Make.defines`**.
+- In file `Make.defines`, replace @{EXAMPLE}@ with content from
+  `unpv13e/config.status`:
 
-LIBUNP_NAME = `../unpv13e/`libunp.a
+  E.g:
 
-LIBUNPXTI_NAME = `../unpv13e/`libunpxti.a
+  - In file `config.status` we have `s,@CC@,gcc,;t t`. So replace `@CC@` with
+    `gcc`.
+  - In file `config.status` we have `s,@CFLAGS@,-g -O2 -D_REENTRANT -Wall,;t t`.
+    So replace `@CFLAGS@` with `-g -O2 -D_REENTRANT -Wall`.
+  - In file `config.status` we have `s,@LIBUNP@,../libunp.a,;t t`.
+    So replace `@LIBUNP@` with `../libunp.a`.
+
+- Then, replace "`../`" with "`../unpv13e/`" in file `Makefile.defines`.
+
+  E.g:
+
+  ```
+  CFLAGS = -I../unpv13e/lib -g -O2 -D_REENTRANT -Wall
+  LIBS = ../unpv13e/libunp.a -lpthread
+  LIBS_XTI = ../unpv13e/libunpxti.a ../unpv13e/libunp.a -lpthread
+
+  LIBUNP_NAME = ../unpv13e/libunp.a
+
+  LIBUNPXTI_NAME = ../unpv13e/libunpxti.a
+  ```
 
 </details>
 
-## How to use:
+Build `nmap` and `ping` program:
 
-- Change directory to folder
+- **nmap:**
 
-**nmap:**
+  - Go to the `nmap` directory:
 
-```console
-cd ./src/nmap
-```
+    ```bash
+    cd ../nmap
+    ```
 
-**ping:**
+  - Build `nmap`:
 
-```console
-cd ./src/ping
-```
+    ```bash
+    make
+    ```
 
-- Build file:
+  - Run `nmap` program:
 
-> NOTE: This program is tested with `gcc, g++` version `10.2.1` and adapted to
-> `extern` changes. So ping folder might have to change to work with new
-> changes. Or you can downgrade `gcc, g++` to older version.
+    ```bash
+    sudo ./nmap 192.168.202.0
+    ```
 
-```console
-make
-```
+- **ping:**
 
-- Run program:
+  - Go to the `ping` directory:
+
+    ```bash
+    cd ../ping
+    ```
+
+  - Build `ping`:
+
+    ```bash
+    make
+    ```
+
+  - Run `ping` program:
+
+    ```bash
+    sudo ./ping 192.168.202.129
+    ```
+
+<!-- Usage -->
+
+## :eyes: Usage
 
 > NOTE: Program must run with `sudo` privileges
 
 **nmap:**
 
-```console
-./nmap 192.168.202.0
-```
+> NOTE: Currently support class D (/24) addresses.
 
-To see more details:
+The idea is simple:
 
-```console
-./nmap 192.168.202.0 -v
-```
+- When we ping, ICMP packets on some OS may be blocked, so we will send ARP packets, because
+  everyone has to answer ARP packets.
+- If the network is: 192.168.202.0/24, then we will send ARP requests to
+  `192.168.202.1` -> `192.168.202.254`.
+
+- To see more details:
+
+  ```console
+  sudo ./nmap 192.168.202.0 -v
+  ```
 
 **ping:**
 
-```console
-./ping 192.168.202.129
-```
+> NOTE: Currently support IPv4 ping.
 
-To see more details:
+- Send ICMP request to target IP.
 
-```console
-./ping 192.168.202.129 -v
-```
+- To see more details:
 
-- Cleanup file:
+  ```bash
+  sudo ./ping 192.168.202.129 -v
+  ```
 
-```console
+---
+
+Cleanup file:
+
+```bash
 make clean
 ```
 
-## TODOs:
+<!-- Roadmap -->
 
-- [x] Stop after send complete
-- [x] Change compiled target name
-- [x] Handle ARP reply
+## :compass: Roadmap
+
+- [x] Stop after send complete.
+- [x] Change compiled target name.
+- [x] Handle ARP reply.
+
+<!-- Contributing -->
+
+## :wave: Contributing
+
+<a href="https://github.com/DuckyMomo20012/nmap-clone/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=DuckyMomo20012/nmap-clone" />
+</a>
+
+Contributions are always welcome!
+
+<!-- Code of Conduct -->
+
+### :scroll: Code of Conduct
+
+Please read the [Code of Conduct](https://github.com/DuckyMomo20012/nmap-clone/blob/main/CODE_OF_CONDUCT.md).
+
+<!-- FAQ -->
+
+## :grey_question: FAQ
+
+- Is this project still maintained?
+
+  - No, but I will only update documentation.
+
+<!-- License -->
+
+## :warning: License
+
+Distributed under MIT license. See
+[LICENSE](https://github.com/DuckyMomo20012/nmap-clone/blob/main/LICENSE)
+for more information.
+
+<!-- Contact -->
+
+## :handshake: Contact
+
+Duong Vinh - [@duckymomo20012](https://twitter.com/duckymomo20012) - tienvinh.duong4@gmail.com
+
+Project Link: [https://github.com/DuckyMomo20012/nmap-clone](https://github.com/DuckyMomo20012/nmap-clone).
+
+<!-- Acknowledgments -->
+
+## :gem: Acknowledgements
+
+Here are useful resources and libraries that we have used in our projects:
+
+- [Awesome Readme Template](https://github.com/Louis3797/awesome-readme-template):
+  A detailed template to bootstrap your README file quickly.
