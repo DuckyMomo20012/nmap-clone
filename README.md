@@ -223,12 +223,12 @@ Build `nmap` and `ping` program:
 
 > NOTE: Currently support class D (/24) addresses.
 
-The idea is simple:
+- The idea is simple:
 
-- When we ping, ICMP packets on some OS may be blocked, so we will send ARP
-  packets because everyone has to answer ARP packets.
-- If the network is: 192.168.202.0/24, then we will send ARP requests to
-  `192.168.202.1` -> `192.168.202.254`.
+  - When we ping, ICMP packets on some OS may be blocked, so we will send ARP
+    packets because everyone has to answer ARP packets.
+  - If the network is: 192.168.202.0/24, then we will send ARP requests to
+    `192.168.202.1` -> `192.168.202.254`.
 
 - To see more details:
 
@@ -236,24 +236,24 @@ The idea is simple:
   sudo ./nmap 192.168.202.0 -v
   ```
 
-Configuration:
+- Configuration:
 
-- In file `src/nmap/main.c`, you can set your own configurations:
+  - In file `src/nmap/main.c`, you can set your own configurations:
 
   ```C
   struct store store_arp = {"", "", 0, "log.txt", 1, 5.0, "wlx0013eff82745"};
   ```
 
-- Struct `store_arp` in file `src/nmap/nmap.h`. You should only set these
-  options below:
+  - Struct `store_arp` in file `src/nmap/nmap.h`. You should only set these
+    options below:
 
   ```C
   struct store {
-    ...
-    char* file_name; /* file name to write found host */
-    int ip_index; /* start index to send ARP request. End at .254 */
-    double timeout_sec; /* timeout (second) for receiving reply packets. This is set for socket options */
-    char if_name[IFNAMSIZ]; /* interface network to inspect */
+      ...
+      char* file_name; /* file name to write found host */
+      int ip_index; /* start index to send ARP request. End at .254 */
+      double timeout_sec; /* timeout (second) for receiving reply packets. This is set for socket options */
+      char if_name[IFNAMSIZ]; /* interface network to inspect */
   };
   ```
 
@@ -283,13 +283,13 @@ Configuration:
   sudo ./ping 192.168.202.129 -v
   ```
 
----
+**Cleanup file:**
 
-Cleanup file:
+- This command will cleanup built files:
 
-```bash
-make clean
-```
+  ```bash
+  make clean
+  ```
 
 <!-- Debugging -->
 
