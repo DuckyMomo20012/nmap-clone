@@ -51,6 +51,9 @@
   - [Prerequisites](#bangbang-prerequisites)
   - [Run Locally](#running-run-locally)
 - [Usage](#eyes-usage)
+  - [nmap](#nmap)
+  - [ping](#ping)
+  - [Cleanup files](#sponge-cleanup-files)
 - [Debugging](#mag-debugging)
 - [Roadmap](#compass-roadmap)
 - [Contributing](#wave-contributing)
@@ -84,12 +87,12 @@ This project requires the following prerequisites:
 
 - Operating system: `Linux` and `macOS`.
 
-  > **NOTE**: This app only supports `Linux` and `macOS`. Currently not
+  > **Note**: This app only supports `Linux` and `macOS`. Currently not
   > supporting `Windows`.
 
-- GCC, G++: >= 10.2.1
-- GDB
-- make
+- GCC, G++: `>= 10.2.1`.
+- GDB.
+- make.
 
 Install GCC, G++, GDB, and make:
 
@@ -179,7 +182,7 @@ Build `nmap` and `ping` program:
 
 - **nmap:**
 
-  > NOTE: You have to change your interface network name in file
+  > **Note**: You have to change your interface network name in file
   > `src/nmap/main.c`. Go to [Usage](#eyes-usage) for more information.
 
   - Go to the `nmap` directory:
@@ -224,11 +227,11 @@ Build `nmap` and `ping` program:
 
 ## :eyes: Usage
 
-> NOTE: `nmap` and `ping` programs MUST run with `sudo` privileges.
+> **Note**: `nmap` and `ping` programs MUST run with `sudo` privileges.
 
-**nmap:**
+### nmap
 
-> NOTE: Currently support class D (/24) addresses.
+> **Note**: Currently support class D (/24) addresses.
 
 - The idea is simple:
 
@@ -278,9 +281,9 @@ Build `nmap` and `ping` program:
   ip address
   ```
 
-**ping:**
+### ping
 
-> NOTE: Currently support IPv4 ping.
+> **Note**: Currently support IPv4 ping.
 
 - Send ICMP request to target IP.
 
@@ -290,7 +293,7 @@ Build `nmap` and `ping` program:
   sudo ./ping 192.168.202.129 -v
   ```
 
-**Cleanup file:**
+### :sponge: Cleanup files
 
 - This command will cleanup built files:
 
